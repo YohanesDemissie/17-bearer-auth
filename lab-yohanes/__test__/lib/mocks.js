@@ -8,17 +8,17 @@ const Gallery = require('../../model/gallery');
 const mocks = module.exports = {};
 mocks.auth = {};
 
-mocks.auth.createOne = () => {
+mocks.auth.createOne = () => { //signup
   let result = {};
   result.password = faker.internet.password();
 
   return new Auth({
-    username: faker.internet.userName(),
+    username: faker.internet.userName(), //username and email template
     email: faker.internet.email(),
   })
-    .generatePasswordHash(result.password)
+    .generatePasswordHash(result.password) //hashing *** our passowrd using crypto/bcrypto
     .then(user => result.user = user)
-    .then(user => user.generateToken())
+    .then(user => user.generateToken()) //token allows access throughout requests to the API as long as the user is signed in
     .then(token => result.token = token)
     .then(() => {
       return result;
@@ -26,7 +26,7 @@ mocks.auth.createOne = () => {
 };
 
 mocks.gallery = {};
-mocks.gallery.createOne = () => {
+mocks.gallery.createOne = () => { //
   let resultMock = null;
 
   return mocks.auth.createOne()
